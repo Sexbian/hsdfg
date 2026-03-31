@@ -6,46 +6,32 @@
     <title>TERMINAL O5-COUNCIL | SCP-SL-014</title>
     <style>
         /* EFEKT WYPUKŁEGO EKRANU (CRT BULGE) */
-        html {
-            background: #000;
-            overflow: hidden;
-        }
+        html { background: #000; overflow: hidden; }
 
         body {
-            background-color: #050505;
-            color: #00ff00;
+            background-color: #050505; color: #00ff00;
             font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0;
             transform: scale(1.1) perspective(1000px) rotateX(1deg);
             filter: contrast(1.2) brightness(1.1);
         }
 
         /* SCANLINES & GLITCH */
         body::before {
-            content: " ";
-            display: block;
-            position: absolute;
+            content: " "; display: block; position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
                         linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
-            z-index: 200;
-            background-size: 100% 3px, 3px 100%;
-            pointer-events: none;
+            z-index: 200; background-size: 100% 3px, 3px 100%; pointer-events: none;
         }
 
         /* WINIETA I ODBŁYSK */
         body::after {
-            content: " ";
-            display: block;
-            position: absolute;
+            content: " "; display: block; position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
             background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%);
-            z-index: 201;
-            pointer-events: none;
+            z-index: 201; pointer-events: none;
         }
 
         #boot-screen {
@@ -54,21 +40,15 @@
         }
 
         #login-screen {
-            display: none;
-            text-align: center;
-            border: 5px solid #1a1a1a;
-            padding: 60px;
-            background: #020502;
-            box-shadow: 0 0 50px rgba(0, 255, 0, 0.1);
-            max-width: 750px;
-            z-index: 5;
-            border-radius: 50px / 15px;
+            display: none; text-align: center; border: 5px solid #1a1a1a;
+            padding: 60px; background: #020502; box-shadow: 0 0 50px rgba(255, 0, 0, 0.1);
+            max-width: 850px; z-index: 5; border-radius: 50px / 15px;
         }
 
-        .header-main { font-size: 3.2rem; font-weight: bold; margin: 0; color: #fff; text-shadow: 0 0 15px #ff0000; }
-        .warning-text { color: #ff0000; font-weight: bold; font-size: 1.3rem; margin: 20px 0; animation: blink 1s infinite; }
-        .amnesty-note { color: #444; font-size: 0.85rem; font-style: italic; }
-
+        .header-main { font-size: 2.8rem; font-weight: bold; margin: 0; color: #fff; text-shadow: 0 0 15px #ff0000; }
+        .warning-box { border: 2px solid #ff0000; padding: 20px; margin: 25px 0; background: rgba(255,0,0,0.1); }
+        .warning-text { color: #ff0000; font-weight: bold; font-size: 1.1rem; animation: blink 1s infinite; margin: 0; }
+        
         input {
             background: #000; border: 2px solid #333; color: #00ff00; padding: 15px;
             font-family: inherit; outline: none; text-align: center; margin-bottom: 25px;
@@ -80,57 +60,53 @@
             cursor: pointer; font-weight: bold; font-size: 1.3rem; text-transform: uppercase;
         }
 
-        /* WYWIAD */
         #content {
-            display: none;
-            width: 90%; max-width: 1100px; height: 85vh;
+            display: none; width: 90%; max-width: 1100px; height: 85vh;
             overflow-y: auto; border: 3px solid #004400; padding: 60px;
-            background: #010301;
-            border-radius: 100px / 25px;
-            scrollbar-width: none;
+            background: #010301; border-radius: 100px / 25px; scrollbar-width: none;
         }
         #content::-webkit-scrollbar { display: none; }
 
-        #text-buffer { 
-            white-space: pre-wrap; 
-            line-height: 1.7; 
-            font-size: 1.5rem;
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
-        }
+        #text-buffer { white-space: pre-wrap; line-height: 1.7; font-size: 1.5rem; text-shadow: 0 0 8px rgba(0, 255, 0, 0.6); }
 
         .bold { font-weight: bold; color: #ffffff; text-shadow: 0 0 10px #fff; }
         .italic { font-style: italic; color: #00ccff; }
         .meta-data { color: #008800; border-bottom: 3px solid #003300; padding-bottom: 20px; margin-bottom: 40px; display: block; }
         .center-text { text-align: center; display: block; margin: 40px 0; font-weight: bold; }
 
-        /* ALARM BOX STYLE */
-        .critical-box {
-            color: #ff0000;
-            font-weight: bold;
-            border: 6px double #ff0000;
-            padding: 25px;
+        /* STYL DLA NOTATKI SIEGELA */
+        .personal-note {
+            color: #d1d1d1;
+            font-style: italic;
+            border-left: 4px solid #555;
+            padding-left: 30px;
             margin: 20px 0;
-            text-align: center;
-            background: rgba(255, 0, 0, 0.15);
-            animation: alert-flash 0.6s infinite;
-            text-transform: uppercase;
-            font-size: 1.6rem;
+            line-height: 1.8;
+            font-size: 1.4rem;
         }
-
-        /* FINAL LOG TEXT */
-        .final-log-text {
+        .signature {
             display: block;
-            text-align: center;
-            margin-top: 50px;
-            color: #004400;
-            font-size: 1.2rem;
+            text-align: right;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: #fff;
             letter-spacing: 5px;
-            text-transform: uppercase;
         }
 
-        @keyframes alert-flash {
-            0%, 100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
-            50% { border-color: #550000; box-shadow: 0 0 0px #000; }
+        .critical-box {
+            color: #ff0000; font-weight: bold; border: 6px double #ff0000; padding: 25px;
+            margin: 20px 0; text-align: center; background: rgba(255, 0, 0, 0.15);
+            animation: alert-flash 0.6s infinite; text-transform: uppercase; font-size: 1.6rem;
+        }
+
+        .final-log-text {
+            display: block; text-align: center; margin-top: 50px;
+            color: #004400; font-size: 1.2rem; letter-spacing: 5px; text-transform: uppercase;
+        }
+
+        @keyframes alert-flash { 
+            0%, 100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; } 
+            50% { border-color: #550000; box-shadow: 0 0 0px #000; } 
         }
 
         #press-space {
@@ -140,7 +116,6 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .body-alert-mode { background-color: #1a0000 !important; }
-        
         #access-denied { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; }
         .strobe-A { background-color: #fff !important; color: #000 !important; }
         .strobe-B { background-color: #000 !important; color: #fff !important; }
@@ -151,13 +126,15 @@
     <div id="boot-screen"></div>
 
     <div id="login-screen">
-        <h1 class="header-main">O5 COUNCIL TERMINAL</h1>
-        <p style="color: #444; letter-spacing: 10px;">TOP SECRET</p>
-        <hr style="border: 0; border-top: 2px solid #111; margin: 40px 0;">
-        <p class="warning-text">AUTORYZACJA WYMAGANA</p>
-        <p class="amnesty-note">Każda próba nieautoryzowanego dostępu wiąże się z wdrożeniem protokołów memetycznych.</p>
-        <input type="password" id="password-input" autocomplete="off" placeholder="WPISZ HASŁO">
-        <button onclick="checkPassword()">ZALOGUJ</button>
+        <p style="color: #666; margin: 0; letter-spacing: 3px;">SCPF GLOBAL TERMINAL v8.42</p>
+        <h1 class="header-main">O5-COUNCIL DIRECT ACCESS</h1>
+        <div class="warning-box">
+            <p class="warning-text">OSTRZEŻENIE: ZAWARTOŚĆ TYLKO DLA PERSONELU POZIOMU 5</p>
+            <p style="color: #880000; font-size: 0.8rem; margin-top: 5px;">WYKRYTO AKTYWNE ŚRODKI MEMETYCZNE BÓJCZE. DOSTĘP BEZ AUTORYZACJI POSKUTKUJE NATYCHMIASTOWYM ZATRZYMANIEM AKCJI SERCA.</p>
+        </div>
+        <input type="password" id="password-input" autocomplete="off" placeholder="WPISZ KLUCZ SZYFRUJĄCY">
+        <button onclick="checkPassword()">AUTORYZUJ DOSTĘP</button>
+        <p style="color: #333; margin-top: 30px; font-size: 0.7rem;">ID: [O5-COMMANDER-6] | LINK: [SECURE-SATELLITE-7]</p>
     </div>
 
     <div id="content">
@@ -172,7 +149,6 @@
 
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let sirenOsc = null;
 
         function playSound(freq, type, duration, vol) {
             try {
@@ -221,7 +197,7 @@
         }
         window.onload = runBoot;
 
-        const trescWywiadu = `(meta) **PRZEPROWADZAJĄCY WYWIAD:** Dr. Rose
+        let trescDoWyswietlenia = `(meta) **PRZEPROWADZAJĄCY WYWIAD:** Dr. Rose
 **DATA I GODZINA:** 30.03.2026 23:53
 **NADZORUJĄCY PERSONEL OCHRONY:** Tom P. , Arthur L.
 ---
@@ -229,125 +205,157 @@
 [WAIT]
 **Dr.Rose:** Witaj, miło mi cię poznać. Jeżeli mogę wiedzieć jak się nazywasz?
 **SCP-SL-014:** Witaj, nazywają mnie Valentin.
-
+[WAIT]
 **Dr.Rose:** A więc jeszcze raz witaj Valentinie, jak cię już poinformowali przeprowadzę z tobą wywiad, a więc zaczynając. Skąd pochodzisz?
 **SCP-SL-014:** Francja. Dawna Francja, ta zanim ludzie zaczęli udawać, że rozumieją porządek świata.
 [WAIT]
 **Dr.Rose:** Czy możesz to doprecyzować?
 **SCP-SL-014:** Paryż. Ale nie ten, który znacie z pocztówek. Ten, który palił się w imię „rewolucji”.
-
+[WAIT]
 **Dr.Rose:** Rewolucji francuskiej?
 **SCP-SL-014:** Tak ją nazywacie. Ja nazywam to polowaniem. Na mój… gatunek.
 [WAIT]
 **Dr.Rose:** Twierdzisz, że byłeś tam obecny?
 **SCP-SL-014:** Oczywiście. Przeżyłem ją. Większość nie miała tyle szczęścia.
-
+[WAIT]
 **Dr.Rose:** Ile masz lat?
 **SCP-SL-014:** Przestałem to liczyć dawno temu, jednakże wydaje mi się że urodziłem się około sto lat przed powstaniem waszego kraju.
 [WAIT]
 **Dr.Rose:** W takim razie jak trafiłeś do Stanów Zjednoczonych?
 **SCP-SL-014:** Statkiem. Wtedy jeszcze nikt nie zadawał pytań, jeśli płaciło się złotem i nie umierało na pokładzie.
-
+[WAIT]
 **Dr.Rose:** Dlaczego zdecydowałeś się pozostać w Nowym Jorku?
 **SCP-SL-014:** Bo było… wygodne. Dużo ludzi. Mało pytań. Idealne warunki.
 [WAIT]
 **Dr.Rose:** Przechodząc do momentu twojego zabezpieczenia, dlaczego zgodziłeś się na dobrowolne przetrzymywanie przez Fundację?
 **SCP-SL-014:** Bo byłem zmęczony. I głodny. A wasze propozycje były… rozsądne. Stały dostęp do pożywienia i brak nagonki. W zamian za klatkę.
-
+[WAIT]
 **Dr.Rose:** Nie przeszkadza ci to?
 **SCP-SL-014:** Klatki różnią się tylko jakością. Ta przynajmniej jest przewidywalna.
 [WAIT]
 **Dr.Rose:** Czy możesz opisać swoje pochodzenie dokładniej? Kim jesteś?
 **SCP-SL-014:** Jestem tym, co wasze mity i legendy określają jako Wampir, jednakże muszę wam przyznać iż potraficie ciekawie podkoloryzować pewne rzeczy.
-
+[WAIT]
 **Dr.Rose:** Jakie rzeczy podkoloryzowaliśmy?
 **SCP-SL-014:** *Valentin się podśmiechuje* Czosnek, krzyże, woda święcona albo moje ulubione, to że powstajemy przez zwykłe ugryzienie w człowieka w szyje. Nie wiem skąd to wzieliście ale jak o tym usłyszałem to mnie to bardzo rozbawiło. 
 [WAIT]
 **Dr.Rose:** To w takim razie jak powstajecie, rodzicie się tacy?
-**SCP-SL-014:** Oczywiście że nie, każdy z nas rodzi się człowiekiem. Żeby człowiek stał się jednym z nas inny wampir musi wyssać z niego całą krew a następnie wlać mu do ust część swojej krwi. 
+**SCP-SL-014:** Oczywiście że nie, każdy z nas rodzi się człowiekiem. Żeby człowiek stał się jednym z nas inny wampir musi wyssać z niego całą krew a następnie wlać mu do ust część swojej krwi.
+[WAIT]
+**Dr.Rose:** To kto cię stworzył?
+**SCP-SL-014:** *Cisza* Nie odpowiem na to. Nie miło jest mówić o kimś, kto nas słyszy.
+[WAIT]
+**SCP-SL-014:** Logo tej waszej fundacji... Stworzył je mój stary znajomy. James Aaron Siegel. Również był wampirem.
+[WAIT]
+(red-alert)`;
 
-**Dr.Rose:** To kto w takim razie cię stworzył?
-**SCP-SL-014:** *Valentin poważnieje i zachowuje ciszę*
-[WAIT]
-**Dr.Rose:** Valentin?
-**SCP-SL-014:** Nie odpowiem na to.
-
-**Dr.Rose:** Dlaczego?
-**SCP-SL-014:** Nie miło jest mówić o kimś, kto nas słyszy.
-
-**Dr.Rose:** *Wyraz twarzy Dr.Rose pokazuje lekki strach* …Rozumiem.
-[WAIT]
-**Dr.Rose:** Jak oceniasz swoją obecną sytuację?
-**SCP-SL-014:** Wygodna. Ciekawa nawet. Wasi ludzie… udają, że mnie rozumieją.
-
-**Dr.Rose:** Czy stanowisz zagrożenie dla Fundacji?
-**SCP-SL-014:** Gdybym chciał, nie zadawałbyś mi tego pytania. ... Logo tej waszej fundacji wydają mi się znajome, i to bardzo.
-[WAIT]
-**Dr.Rose:** Kojarzysz te loga? Skąd?
-**SCP-SL-014:** Stworzył je mój stary znajomy... nazywał się James Aaron Siegel. Również był wampirem.
-[WAIT]
-(red-alert)
-(alarm) [PRZERWA W NAGRANIU — 00:00:14]
-[WAIT]
-(alarm) [DODATEK LOGU SYSTEMOWEGO: AUTOMATYCZNE WYSZUKIWANIE TERMINU „JAMES AARON SIEGEL” ZAINICJOWANE PRZEZ DR.ROSE]
-[WAIT]
+        const sekcjaAlarmu = `(alarm) [KRYTYCZNE NARUSZENIE PROTOKOŁU — WYKRYTO ZAKAZANE DANE]
+(alarm) [PRZERWA W NAGRANIU — WDROŻENIE ALFA-1]
 (alarm) [ALARM BEZPIECZEŃSTWA — POZIOM 3]
-[WAIT]
-(alarm) [DOSTĘP DO ZABEZPIECZONYCH DANYCH ZABLOKOWANY]
-[WAIT]
-(alarm) [OGŁOSZENIE AUTOMATYCZNE: CAŁY PERSONEL POZOSTAĆ NA STANOWISKACH]
-[WAIT]
-(alarm) [PRZYBYCIE: MFO ALFA-1]
-[WAIT]
-(alarm) [STATUS: PROTOKÓŁ AMNESTYCZNY WDROŻONY WOBEC PERSONELU BIORĄCEGO UDZIAŁ W WYWIADZIE]
-[WAIT]
+(alarm) [DOSTĘP DO DANYCH ZABLOKOWANY PRZEZ RADĘ O5]
+(alarm) [STATUS: PROTOKÓŁ AMNESTYCZNY WDROŻONY WOBEC PERSONELU]
 (koniec) KONIEC LOGU`;
+
+        const notatkaSiegela = `(notatka) Został zabezpieczony.
+Nie pozwolił się zabezpieczyć, zawsze taki był.
+SCP-SL-014 nie jest „anomalią”, którą można zamknąć i obserwować. To podmiot, który rozumie więcej, niż powinien i więcej, niż my kiedykolwiek będziemy.
+
+Nie próbuje się uwolnić, bo nie musi.
+
+Rozpoznał mnie natychmiast, nie było w tym wahania, nie było analizy. To nie była identyfikacja, to było przypomnienie. To naprawdę on.
+Valentin.
+
+Nie powinien istnieć.
+Nie w tej formie. Nie tutaj.
+A jednak siedzi zamknięty kilka kilometrów pod ziemią… i pozwala nam wierzyć, że mamy nad nim kontrolę.
+
+Pamiętam moment.
+Krew. Ciszę. I wybór, który nie był wyborem.
+To nie był dar.
+To była decyzja podjęta za mnie.
+On mnie stworzył.
+
+James Aaron Siegel przestał istnieć tamtej nocy.
+To, czym jestem teraz… jest jego dziełem.
+I on o tym wie.
+
+Widzę to w jego spojrzeniu. W sposobie, w jaki mówi. W tym, że nie musi niczego tłumaczyć.
+
+On nie wrócił przypadkiem, on mnie znalazł.
+Nie wiem, dlaczego się ujawnił.
+
+Nie wiem, dlaczego pozwolił się zamknąć.
+Nie wiem, czy to jest test… czy początek czegoś znacznie gorszego.
+
+Fundacja wierzy, że zabezpieczyła niebezpieczny podmiot.
+
+Prawda jest inna.
+
+To ja zostałem zabezpieczony.
+
+(podpis) J.A.S`;
 
         let index = 0, isWaiting = false, alertMode = false;
         const buffer = document.getElementById('text-buffer'), contentDiv = document.getElementById('content'), spacePrompt = document.getElementById('press-space');
 
         function typeWriter() {
-            if (index < trescWywiadu.length && !isWaiting) {
-                if (trescWywiadu.substring(index, index + 11) === "(red-alert)") {
-                    alertMode = true; index += 11; buffer.innerHTML = '';
+            if (index < trescDoWyswietlenia.length && !isWaiting) {
+                // ALARM
+                if (trescDoWyswietlenia.substring(index, index + 11) === "(red-alert)") {
+                    alertMode = true;
+                    buffer.innerHTML = ""; 
+                    trescDoWyswietlenia = sekcjaAlarmu; 
+                    index = 0; 
                     document.body.classList.add('body-alert-mode');
                     startSiren();
-                    setTimeout(typeWriter, 100); return;
+                    setTimeout(typeWriter, 500); return;
                 }
-                if (trescWywiadu.substring(index, index + 6) === "[WAIT]") {
+
+                if (trescDoWyswietlenia.substring(index, index + 6) === "[WAIT]") {
                     isWaiting = true; spacePrompt.style.display = "block"; index += 6; return;
                 }
 
-                if (trescWywiadu[index] !== " " && trescWywiadu[index] !== "\n") playSound(Math.random() * 20 + 120, 'sine', 0.05, 0.02);
+                // Dźwięk klawiszy (zawsze przy pisaniu)
+                if (trescDoWyswietlenia[index] !== " " && trescDoWyswietlenia[index] !== "\n") playSound(Math.random() * 20 + 120, 'sine', 0.05, 0.02);
 
-                let current = trescWywiadu.substring(alertMode ? index - (index - trescWywiadu.indexOf("(red-alert)") - 11) : 0, index + 1);
-                
-                buffer.innerHTML = current
+                buffer.innerHTML = trescDoWyswietlenia.substring(0, index + 1)
                     .replace(/\(meta\)/g, '<div class="meta-data">').replace(/---\n/g, '</div>')
                     .replace(/\(srodek\)(.*?)\n/g, '<span class="center-text">$1</span>')
                     .replace(/\(alarm\)(.*?)\n/g, '<div class="critical-box">$1</div>')
+                    .replace(/\(notatka\)/g, '<div class="personal-note">')
+                    .replace(/\(podpis\)(.*?)$/g, '</div><span class="signature">$1</span>')
                     .replace(/\(koniec\)(.*?)$/g, '<span class="final-log-text">$1</span>')
                     .replace(/\*\*(.*?)\*\*/g, '<span class="bold">$1</span>').replace(/\*(.*?)\*/g, '<span class="italic">$1</span>')
                     .replace(/\n/g, '<br>').replace(/\[WAIT\]/g, '');
                 
                 index++;
                 contentDiv.scrollTop = contentDiv.scrollHeight;
-                setTimeout(typeWriter, alertMode ? 8 : 20);
+                setTimeout(typeWriter, alertMode ? 40 : 30);
             }
         }
 
         function checkPassword() {
-            if (document.getElementById('password-input').value.toLowerCase() === "valentin") {
+            const pass = document.getElementById('password-input').value.toLowerCase();
+            if (pass === "valentin") {
                 document.getElementById('login-screen').style.display = "none";
                 contentDiv.style.display = "block";
                 typeWriter();
-            } else { triggerSecurity(); }
+            } else if (pass === "siegel") {
+                // HASŁO SIEGEL - NOWA LOGIKA
+                document.getElementById('login-screen').style.display = "none";
+                contentDiv.style.display = "block";
+                buffer.innerHTML = ""; // Czyścimy ekran
+                trescDoWyswietlenia = notatkaSiegela; // Podmieniamy tekst na list
+                index = 0; 
+                typeWriter(); // Startujemy pisanie (bez syreny)
+            } else {
+                triggerSecurity();
+            }
         }
 
         window.addEventListener('keydown', (e) => {
             if (e.code === "Space" && isWaiting) {
                 e.preventDefault(); isWaiting = false; spacePrompt.style.display = "none";
-                playSound(300, 'square', 0.1, 0.1); 
                 typeWriter();
             }
         });
@@ -358,6 +366,7 @@
             let s = false;
             setInterval(() => { document.body.className = s ? "strobe-A" : "strobe-B"; s = !s; }, 80);
             playSound(12000, 'square', 10, 0.3);
+            startSiren();
         }
     </script>
 </body>
